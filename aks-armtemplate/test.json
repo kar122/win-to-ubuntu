@@ -1,0 +1,138 @@
+{
+  "$schema":"https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion":"1.0.0.0",
+  "parameters":{
+     "aksClusterName":{
+        "type":"string",
+        "metadata":{
+           "description":"The name of the AKS cluster."
+        }
+     },
+     "aksLocation":{
+        "type":"string",
+        "metadata":{
+           "description":"The location of the AKS cluster."
+        }
+     },
+     "aksDnsPrefix":{
+        "type":"string",
+        "metadata":{
+           "description":"The DNS prefix to use with the AKS cluster."
+        }
+     },
+     "aksServicePrincipalClientId":{
+        "type":"securestring",
+        "metadata":{
+           "description":"The client ID of the service principal used by the AKS cluster."
+        }
+     },
+     "aksServicePrincipalClientSecret":{
+        "type":"securestring",
+        "metadata":{
+           "description":"The client secret of the service principal used by the AKS cluster."
+        }
+     },
+     "podName":{
+        "type":"string",
+        "metadata":{
+           "description":"Name of the pod"
+        }
+     },
+     "containerName":{
+        "type":"string",
+        "metadata":{
+           "description":"Name of the container"
+        }
+     },
+     "containerImage":{
+        "type":"string",
+        "defaultValue":"visionify/visionaiweb:latest",
+        "metadata":{
+           "description":"Docker image to use for the container"
+        }
+     },
+     "containerPort":{
+        "type":"array",
+        "defaultValue":[
+           80
+        ],
+        "metadata":{
+           "description":"Ports to expose on the container"
+        }
+     }
+  },
+  "variables":{
+     "nodeCount":3,
+     "nodeVmSize":"Standard_D2_v2"
+  },
+  "resources":[
+     {
+        "apiVersion":"2022-10-02-preview",
+        "type":"Microsoft.ContainerService/managedClusters",
+        "name":"[parameters('aksClusterName')]",
+        "location":"[parameters('aksLocation')]",
+        "properties":{
+           "dnsPrefix":"[parameters('aksDnsPrefix')]",
+           "kubernetesVersion":"1.26.0",
+           "servicePrincipalProfile":{
+              "clientId":"[parameters('aksServicePrincipalClientId')]",
+              "secret":"[parameters('aksServicePrincipalClientSecret')]"
+           },
+           "agentPoolProfiles":[
+              {
+                 "name":"nodepool1",
+                 "count":"[variables('nodeCount')]",
+                 "vmSize":"[variables('nodeVmSize')]",
+                 "osType":"Linux",
+                 "maxPods":110,
+                 "vnetSubnetId":"[resourceId('Microsoft.Network/virtualNetworks/subnets', 'vnet', 'default')]",
+                 "tags":{
+                    "nodepool1":"true"
+                 }
+              },
+              {
+                 "name":"systempool",
+                 "count":1,
+                 "vmSize":"Standard_DS2_v2",
+                 "osType":"Linux",
+                 "storageProfile":"ManagedDisks",
+                 "vnetSubnetId":"[resourceId('Microsoft.Network/virtualNetworks/subnets', 'vnet', 'default')]",
+                 "maxPods":110,
+                 "type":"VirtualMachineScaleSets",
+                 "mode":"System"
+              }
+           ]
+        },
+        "resources":[
+           {
+              "type":"Microsoft.ContainerService/managedClusters/pods",
+              "apiVersion":"2021-07-01",
+              "name":"[concat(parameters('aksClusterName'), '/', parameters('podName'))]",
+              "location":"[parameters('aksLocation')]",
+              "dependsOn":[
+                 "[resourceId('Microsoft.ContainerService/managedClusters', parameters('aksClusterName'))]"
+              ],
+              "properties":{
+                 "containers":[
+                    {
+                       "name":"[parameters('containerName')]",
+                       "image":"[parameters('containerImage')]",
+                       "ports":[
+                          {
+                             "containerPort":"[parameters('containerPort')]"
+                          }
+                       ]
+                    }
+                 ]
+              }
+           }
+        ]
+     }
+  ],
+  "outputs":{
+     "podName":{
+        "type":"string",
+        "value":"[parameters('podName')]"
+     }
+  }
+}

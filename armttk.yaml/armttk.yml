@@ -1,0 +1,37 @@
+name: ARM-TTK Validation
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_test:
+    runs-on: windows-latest
+    steps:
+      - name: Install Azure PowerShell Module
+        uses: Azure/powershell@v1
+        with:
+          azPSVersion: '3.1.0'
+          inlineScript: |
+            #Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+            #choco Install azure-cli -y
+      - name: Clone ARM-TTK 
+        timeout-minutes: 5
+        run: |
+          mkdir karthik
+          cd .\karthik
+          git clone https://github.com/Azure/arm-ttk.git
+      - name: Validate ARM templates using ARM-TTK
+        shell: pwsh
+        run: |
+          cd .\karthik
+          dir
+          cd .\arm-ttk
+          dir
+          Get-ChildItem *.ps1, *.psd1, *.ps1xml, *.psm1 -Recurse | Unblock-File
+          Import-Module .\arm-ttk\arm-ttk.psd1
+          $url = 'https://raw.githubusercontent.com/kar122/clonerepo/main/mainTemplate2.json'
+          $jsonContent = Invoke-WebRequest -Uri $url -UseBasicParsing | Select-Object -ExpandProperty Content | ConvertFrom-Json
+          $jsonContent | ConvertTo-Json | Set-Content -Path "mainTemplate2.json"
+          Test-AzTemplate -TemplatePath "mainTemplate2.json"

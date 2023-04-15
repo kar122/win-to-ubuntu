@@ -1,0 +1,147 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json#",
+  "handler": "Microsoft.Azure.CreateUIDef",
+  "version": "0.1.2-preview",
+  "parameters": {
+    "basics": [
+      {
+        "name": "location",
+        "type": "Microsoft.Common.Location",
+        "label": "Location",
+        "defaultValue": "",
+        "toolTip": "Select the location where you want to deploy the resources.",
+        "constraints": {
+          "allowedLocations": [
+            "East US",
+            "West US",
+            "Central US",
+            "South Central US",
+            "North Central US",
+            "East US 2",
+            "West US 2",
+            "West Central US",
+            "Canada East",
+            "Canada Central",
+            "Brazil South"
+          ]
+        }
+      }
+    ],
+    "steps": [
+      {
+        "name": "clusterSettings",
+        "label": "Cluster Settings",
+        "subLabel": {
+          "preValidation": "Provide the required information",
+          "postValidation": "Done"
+        },
+        "bladeTitle": "Cluster Settings",
+        "elements": [
+          {
+            "name": "clusterName",
+            "type": "Microsoft.Common.TextBox",
+            "label": "Cluster Name",
+            "defaultValue": "",
+            "toolTip": "Enter a name for the cluster.",
+            "constraints": {
+              "required": true,
+              "regex": "^[a-zA-Z0-9_-]+$",
+              "validationMessage": "The cluster name must contain only alphanumeric characters, underscores, and hyphens."
+            }
+          },
+          {
+            "name": "dnsPrefix",
+            "type": "Microsoft.Common.TextBox",
+            "label": "DNS Prefix",
+            "defaultValue": "",
+            "toolTip": "Enter a DNS prefix for the cluster.",
+            "constraints": {
+              "required": true,
+              "regex": "^[a-zA-Z0-9_-]+$",
+              "validationMessage": "The DNS prefix must contain only alphanumeric characters, underscores, and hyphens."
+            }
+          },
+          {
+            "name": "osDiskSizeGB",
+            "type": "Microsoft.Common.Slider",
+            "label": "OS Disk Size (GB)",
+            "min": 30,
+            "max": 1024,
+            "step": 1,
+            "defaultValue": 30,
+            "toolTip": "Select the size of the OS disk in GB."
+          },
+          {
+            "name": "agentCount",
+            "type": "Microsoft.Common.Slider",
+            "label": "Agent Count",
+            "min": 1,
+            "max": 100,
+            "step": 1,
+            "defaultValue": 1,
+            "toolTip": "Select the number of agents."
+          },
+          {
+            "name": "agentVMSize",
+            "type": "Microsoft.Common.DropDown",
+            "label": "Agent VM Size",
+            "defaultValue": "Standard_D2_v2",
+            "toolTip": "Select the VM size for the agents.",
+            "constraints": {
+              "allowedValues": [
+                {
+                  "label": "Standard_D2_v2",
+                  "value": "Standard_D2_v2"
+                },
+                {
+                  "label": "Standard_D3_v2",
+                  "value": "Standard_D3_v2"
+                },
+                {
+                  "label": "Standard_D4_v2",
+                  "value": "Standard_D4_v2"
+                                  }
+              ]
+            }
+          },
+          {
+            "name": "linuxAdminUsername",
+            "type": "Microsoft.Common.TextBox",
+            "label": "Linux Admin Username",
+            "defaultValue": "",
+            "toolTip": "Enter a username for the Linux administrator.",
+            "constraints": {
+              "required": true,
+              "regex": "^[a-zA-Z0-9_-]+$",
+              "validationMessage": "The username must contain only alphanumeric characters, underscores, and hyphens."
+            }
+          },
+          {
+            "name": "sshRSAPublicKey",
+            "type": "Microsoft.Common.TextBox",
+            "label": "SSH RSA Public Key",
+            "defaultValue": "",
+            "toolTip": "Enter the SSH RSA public key for the Linux administrator.",
+            "constraints": {
+              "required": true,
+              "regex": "ssh-rsa[\\s]+([A-Za-z0-9+/]+[=]{0,3})([\\s]+.*)?",
+              "validationMessage": "Please provide a valid SSH RSA public key."
+            }
+          }
+        ]
+      }
+    ],
+    "outputs": {
+      "location": "[location()]",
+      "clusterName": "[steps('clusterSettings').clusterName]",
+      "dnsPrefix": "[steps('clusterSettings').dnsPrefix]",
+      "osDiskSizeGB": "[steps('clusterSettings').osDiskSizeGB]",
+      "agentCount": "[steps('clusterSettings').agentCount]",
+      "agentVMSize": "[steps('clusterSettings').agentVMSize]",
+      "linuxAdminUsername": "[steps('clusterSettings').linuxAdminUsername]",
+      "sshRSAPublicKey": "[steps('clusterSettings').sshRSAPublicKey]"
+    }
+  }
+}
+
+

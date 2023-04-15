@@ -1,0 +1,26 @@
+name: Copy JSON to Azure Blob Storage
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
+
+jobs:
+  copy-json:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Upload JSON to Azure Blob Storage
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+           RESOURCE_GROUP_NAME="aksumma"
+           STORAGE_ACCOUNT_NAME="aksummasa"
+           CONTAINER_NAME="container"
+           SOURCE_PATH="https://raw.githubusercontent.com/kar122/jsontoblob/main/scenarios.json"
+           az storage blob upload --account-name "aksummasa" --account-key "EHgYO+PteTD3ffty2emylBZBr4Rwsh6f969wyEHUU8gcrSiCyzpriDsRw6qJsm7BBLbT4QoaJct0+ASt60X4Qw==" --container-name "container" --name "file.json" --type page --source-path "https://raw.githubusercontent.com/kar122/jsontoblob/main/scenarios.json"

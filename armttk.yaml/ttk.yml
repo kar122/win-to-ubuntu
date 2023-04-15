@@ -1,0 +1,38 @@
+on: [push]
+name: Azure ARM
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout code
+      - uses: actions/checkout@main
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
+          npm install -g jsonlint
+
+      # Validate JSON file
+      - name: Validate JSON
+        run: |
+          curl https://raw.githubusercontent.com/kar122/clonerepo/main/.github/workflows/azuredeploy.json > azuredeploy.json
+          jsonlint -q azuredeploy.json
+
+      # Log into Azure
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # Deploy ARM template
+      - name: Run ARM deploy
+        uses: azure/arm-deploy@v1
+        with:
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+          resourceGroupName: aksazure
+          template: ./azuredeploy.json
+          parameters: location=eastus, vmSize=Standard_DS2_v2, kubernetesVersion=1.26.0, networkPlugin=kubenet, clusterResourceName=akscluster, createNewCluster=true, vmEnableAutoScale=true, vmCount=3, osDiskSizeGB=650, 
+
+      # Output containerName variable from template
+      - run: echo ${{ steps.deploy.outputs.containerName }}

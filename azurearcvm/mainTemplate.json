@@ -1,0 +1,49 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "machineName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the Ubuntu server to onboard to Azure Arc."
+            }
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.HybridCompute/machines",
+            "apiVersion": "2021-05-20",
+            "name": "[parameters('machineName')]",
+            "location": "[resourceGroup().location]",
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "source": {
+                    "id": "[resourceId('Microsoft.HybridCompute/machines', parameters('machineName'))]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.HybridCompute/machines/extensions",
+            "apiVersion": "2021-05-20",
+            "name": "[concat(parameters('machineName'), '/AzureArcAgent')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.HybridCompute/machines', parameters('machineName'))]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "1.0",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "TenantId": "4b690191-91e4-4b08-833d-a384c64b235f",
+                    "ArcLocation": "EastUS",
+                    "SubscriptionId": "8914bde9-610c-4358-9250-68afdf4f3a97",
+                    "ResourceGroupName": "arcvm"
+                }
+            }
+        }
+    ]
+}

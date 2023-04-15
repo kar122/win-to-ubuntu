@@ -1,0 +1,33 @@
+{
+    "type": "Microsoft.HybridCompute/machines",
+    "apiVersion": "2022-11-10",
+    "name": "string",
+    "location": "string",
+    "identity": {
+      "type": "SystemAssigned"
+    },
+    "properties": {
+      "clientPublicKey": "string",
+      "cloudMetadata": {},
+      "osProfile": {
+        "linuxConfiguration": {
+          "patchSettings": {
+            "assessmentMode": "string",
+            "patchMode": "string"
+          }
+        }
+      },
+      "osType": "linux",
+      "serviceStatuses": {
+        "extensionService": {
+          "startupType": "string",
+          "status": "string"
+        },
+        "guestConfigurationService": {
+          "startupType": "string",
+          "status": "string"
+        }
+      },
+      "vmId": "string"
+    }
+  }

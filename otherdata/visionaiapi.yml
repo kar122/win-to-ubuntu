@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: visionai-api-pod
+spec:
+  containers:
+  - name: api
+    image: visionify/visionai-api:latest

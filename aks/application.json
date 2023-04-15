@@ -1,0 +1,85 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "applicationResourceName": {
+        "type": "string",
+        "metadata": {
+          "description": "The name of the Azure Managed Application resource."
+        }
+      },
+      "applicationLockLevel": {
+        "type": "string",
+        "defaultValue": "CanNotDelete",
+        "allowedValues": [
+          "CanNotDelete",
+          "ReadOnly",
+          "None"
+        ],
+        "metadata": {
+          "description": "The lock level for the Azure Managed Application."
+        }
+      },
+      "applicationLocation": {
+        "type": "string",
+        "metadata": {
+          "description": "The location for the Azure Managed Application."
+        }
+      },
+      "planName": {
+        "type": "string",
+        "metadata": {
+          "description": "The name of the plan for the Azure Managed Application."
+        }
+      },
+      "planPublisher": {
+        "type": "string",
+        "metadata": {
+          "description": "The publisher of the plan for the Azure Managed Application."
+        }
+      },
+      "planProduct": {
+        "type": "string",
+        "metadata": {
+          "description": "The product of the plan for the Azure Managed Application."
+        }
+      },
+      "planVersion": {
+        "type": "string",
+        "metadata": {
+          "description": "The version of the plan for the Azure Managed Application."
+        }
+      },
+      "applicationKind": {
+        "type": "string",
+        "defaultValue": "ServiceCatalog",
+        "allowedValues": [
+          "MarketPlace",
+          "ServiceCatalog"
+        ],
+        "metadata": {
+          "description": "The kind of Azure Managed Application."
+        }
+      }
+    },
+    "resources": [
+      {
+        "type": "Microsoft.Solutions/applications",
+        "apiVersion": "2021-07-01",
+        "name": "[parameters('applicationResourceName')]",
+        "location": "[parameters('applicationLocation')]",
+        "kind": "[parameters('applicationKind')]",
+        "properties": {
+          "managedResourceGroupId": "/subscriptions/8914bde9-610c-4358-9250-68afdf4f3a97/resourceGroups/aksazure",
+          "managedResourceGroupName": "[resourceGroup().name]",
+          "lockLevel": "[parameters('applicationLockLevel')]",
+          "plan": {
+            "name": "[parameters('planName')]",
+            "publisher": "[parameters('planPublisher')]",
+            "product": "[parameters('planProduct')]",
+            "version": "[parameters('planVersion')]"
+          }
+        }
+      }
+    ]
+  }

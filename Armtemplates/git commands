@@ -1,0 +1,10 @@
+#for installing git 
+#sudo apt install git 
+
+steps:
+- script: |
+    sudo apt-get update
+    sudo apt-get install -y linkchecker
+    linkchecker -r5 -t5 --check-extern http://example.com
+  displayName: 'Run linkchecker'
+  failOnStderr: true

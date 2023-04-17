@@ -1,4 +1,4 @@
-name: Sync to Azure Blob Storage
+name: Transfer and Sync to Azure Blob Storage
 
 on:
   push:
@@ -6,31 +6,36 @@ on:
       - main
 
 jobs:
+  transfer-to-azure-blob-storage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Transfer to Azure Blob Storage
+        uses: Azure/blobxfer@1.5.5
+        with:
+          storage_account: aksummasa
+          storage_account_key: ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
+          container_name: container
+          local_path: ./scenarios.json
+          blob_path: /container/myblob.json
+
   sync-to-azure-blob-storage:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout source code
-      uses: actions/checkout@v2
+      - name: Checkout source code
+        uses: actions/checkout@v2
 
-    - name: Sync to Azure Blob Storage
-      uses: azure/cli@v1.0.0
-      with:
-        inlineScript: |
-          # Authenticate to Azure
-          az login --service-principal -u ${{ secrets.servicePrincipalId }} -p ${{ secrets.servicePrincipalKey }} --tenant ${{ secrets.tenantId }}
-
-          # Clone the visionai repository to the agent
+      - name: Sync to Azure Blob Storage
+        env:
+          servicePrincipalId: ${{ secrets.servicePrincipalId }}
+          servicePrincipalKey: ${{ secrets.servicePrincipalKey }}
+          tenantId: ${{ secrets.tenantId }}
+        run: |
+          az login --service-principal -u $servicePrincipalId -p $servicePrincipalKey --tenant $tenantId
           git clone https://github.com/visionify/visionai.git
-
-          # Switch to the main branch
           cd visionai
           git checkout main
-
-          # Sync the scenario.json file to the container
-          az storage blob upload --destination-path <destination-path> --source scenario.json --account-name <storage-account-name> --account-key <storage-account-key>
-
-      env:
-        servicePrincipalId: ${{ secrets.servicePrincipalId }}
-        servicePrincipalKey: ${{ secrets.servicePrincipalKey }}
-        tenantId: ${{ secrets.tenantId }}
+          az storage blob upload --destination-path /container/myblob.json --source ./scenarios.json --account-name aksummasa --account-key ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}

@@ -1,0 +1,28 @@
+
+az aks show --name akscluster --resource-group akspod 
+
+echo $KUBECONFIG
+
+kubectl config current-context
+
+kubectl config set-context akscluster --cluster=akscluster --user=clusterUser_akscluster_akscluster
+
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+
+sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+
+sudo apt-get update
+
+sudo apt-get install -y kube-apiserver
+
+kubelet, kubectl, kubeproxy, kubeapiserver, kubeadm, kubeconfig
+
+
+visioniai.azurekubernetesservice --> clusterExtensionType
+
+az acr show --name ummaregistry --query "id" --output tsv
+/subscriptions/8914bde9-610c-4358-9250-68afdf4f3a97/resourceGroups/akspod/providers/Microsoft.ContainerRegistry/registries/ummaregistry
+
+az role assignment create --assignee 48444e25-b4da-4fa5-9c91-616a70a02091 --scope /subscriptions/8914bde9-610c-4358-9250-68afdf4f3a97/resourceGroups/akspod/providers/Microsoft.ContainerRegistry/registries/ummaregistry --role acrpull
+
+az provider register --namespace Microsoft.PartnerCenterIngestion --subscription 8914bde9-610c-4358-9250-68afdf4f3a97 --wait

@@ -1,0 +1,60 @@
+"properties":{
+    "kubernetesVersion":"[parameters('kubernetesVersion')]",
+    "dnsPrefix":"[parameters('dnsPrefix')]",
+    "agentPoolProfiles":[
+        {
+            "name":"pool",
+            "osDiskSizeGB":"[variables('osDiskSizeGB')]",
+            "count":"[parameters('vmCount')]",
+            "enableAutoScaling":"[parameters('vmEnableAutoScale')]",
+            "minCount":1,
+            "maxCount":10,
+            "vmSize":"[parameters('vmSize')]",
+            "osType":"Linux",
+            "storageProfile":"ManagedDisks",
+            "type":"VirtualMachineScaleSets",
+            "mode":"System",
+            "maxPods":110,
+            "enableNodePublicIP":false
+        }
+    ],
+    "networkProfile":{
+        "loadBalancerSku":"standard",
+        "networkPlugin":"[parameters('networkPlugin')]"
+    },
+    "resources": {
+        "apiVersion": "v1",
+        "kind": "Pod",
+        "metadata": {
+            "name": "nginx-pod"
+        },
+        "spec": {
+            "containers": [
+                {
+                    "name": "nginx",
+                    "image": "nginx:latest",
+                    "ports": [
+                        {
+                            "containerPort": 80
+                        }
+                    ],
+                    "volumeMounts": [
+                        {
+                            "name": "nginx-config",
+                            "mountPath": "/etc/nginx/nginx.conf",
+                            "subPath": "nginx.conf"
+                        }
+                    ]
+                }
+            ],
+            "volumes": [
+                {
+                    "name": "nginx-config",
+                    "configMap": {
+                        "name": "nginx-config"
+                    }
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,89 @@
+Work Update
+
+Today, 
+- User Story 327
+- Tried to deploy pod with aks cluster using resource type Microsoft.Resource/deployment, received error as invalid resource type
+- Studying Helm chart to see the possibility for pod creation with aks cluster 
+
+Tomorrow,
+- Will continue to explore more on Helm Chart 
+
+
+
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "",
+    "parameters": {
+        "clusterName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the AKS cluster."
+            }
+        },
+        "resourceGroup": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the resource group."
+            }
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "tomcat-deployment",
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                    "contentVersion": "",
+                    "resources": [
+                        {
+                            "apiVersion": "apps/v1beta2",
+                            "kind": "Deployment",
+                            "metadata": {
+                                "name": "tomcat-deployment222"
+                            },
+                            "spec": {
+                                "selector": {
+                                    "matchLabels": {
+                                        "app": "tomcat"
+                                    }
+                                },
+                                "replicas": 3,
+                                "template": {
+                                    "metadata": {
+                                        "labels": {
+                                            "app": "tomcat"
+                                        }
+                                    },
+                                    "spec": {
+                                        "containers": [
+                                            {
+                                                "name": "tomcat",
+                                                "image": "tomcat:9.0",
+                                                "ports": [
+                                                    {
+                                                        "containerPort": 8080
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                "parameters": {
+                    "clusterName": {
+                        "value": "[parameters('clusterName')]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.ContainerService/managedClusters', parameters('clusterName'))]"
+            ]
+        }
+    ]
+}

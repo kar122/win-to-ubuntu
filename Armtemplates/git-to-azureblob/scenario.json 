@@ -1,0 +1,807 @@
+
+    "version": "0.0.3",
+    "scenarios": [
+        {
+            "id": "73218220-69e3-455c-9594-e28a310c8282",
+            "name": "smoke-and-fire-detection",
+            "version": "0.0.7",
+            "tagline": "An intelligent Early Fire Signs Detection system aimed at safeguarding people and facilities.",
+            "overview": "Early Fire Signs Detection is designed to spot early signs of smoke and fire and helps save lives and mitigate damages caused by industry fires. We aim to create safe workplaces by offering innovative, reliable, flexible, and scalable solutions.",
+            "docs": "https://docs.visionify.ai/scenarios/smoke-and-fire-detection/",
+            "image": "https://docsvisionify.blob.core.windows.net/docs-images/docs-visionify-version1.0-23March23/smoke-and-fire.png",
+            "thumbnail": "https://docsvisionify.blob.core.windows.net/docs-images/docs-visionify-version1.0-23March23/smoke-and-fire.png",
+            "models": {
+                "latest": {
+                    "version": "0.0.7",
+                    "name": "smoke-and-fire-detection",
+                    "accuracy": 98.2,
+                    "recall": 95.2,
+                    "f1": 95,
+                    "datasetSize": 240032,
+                    "model_url": "https://workplaceos.blob.core.windows.net/models/smoke-and-fire-detection/smoke-and-fire-detection-0.0.7.zip",
+                    "model_hash": "1e0585f776e1dd2a7f391107458fdd6a"
+                },
+                "other": [
+                ]
+            },
+            "tags": [
+                "Smoke",
+                "Fire",
+                "Sparks",
+                "Embers",
+                "Early Fire Signature",
+                "Hazard warning"
+            ],
+            "categories": [
+                "Personnel health",
+                "Hazard warning"
+            ],
+            "events": {
+                "SMOKE_DETECTED" : {
+                    "description": "Smoke detected",
+                    "schedule": "Immediate"
+                },
+                "FIRE_DETECTED" : {
+                    "description": "Fire detected",
+                    "schedule": "Immediate"
+                }
+                
+            },
+            "configuration": [
+                {
+                    "name": "focus_area",
+                    "type": "region_of_interest",
+                    "required": false,
+                    "default": [
+                        0,
+                        0,
+                        1,
+                        1
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "38c5b702-c646-4193-b54f-064157168407",
+            "name": "ppe-detection",
+            "version": "0.0.8",
+            "tagline": "Prevent Workplace Injuries and Occupational Hazards with Vision AI.",
+            "overview": "Detect presence or absence of PPE (Personal Protective Equipments). Get real-time (configurable) events when employees are non compliant. Supports helmets, safety boots, vests, masks, and eye goggles",
+            "docs": "https://docs.visionify.ai/scenarios/ppe-detection/",
+            "image": "https://docsvisionify.blob.core.windows.net/docs-images/docs-visionify-version1.0-23March23/PPE_detection.png",
+            "thumbnail": "https://docsvisionify.blob.core.windows.net/docs-images/docs-visionify-version1.0-23March23/PPE_detection.png",
+            "models": {
+                "latest": {
+                    "version": "0.0.8",
+                    "name": "yolov5-ppe-detection",
+                    "accuracy": 98.2,
+                    "recall": 95.2,
+                    "f1": 95,
+                    "datasetSize": 240032,
+                    "model_url": "https://workplaceos.blob.core.windows.net/models/ppe-detection/ppe-detection-0.0.8.zip",
+                    "model_hash": "257e4f2a85defb28d5e839e7c1989c2e"
+                },
+                "other": [
+                ]
+            },
+            "tags": [
+                "Personnel Protective Equipment",
+                "Helmets",
+                "Work Boots",
+                "Goggles",
+                "Safety Vests"
+            ],
+            "categories": [
+                "Personnel health",
+                "Personnel safety",
+                "Company policies"
+            ],
+            "events": {
+                "NO_HELMET" : {
+                    "description": "People detected without a helmet",
+                    "schedule": "Immediate"
+                },
+                "NO_BOOTS" : {
+                    "description": "People detected without boots",
+                    "schedule": "Immediate"
+                },
+                "NO_VEST" : {
+                    "description": "People detected without a vest",
+                    "schedule": "Immediate"
+                },
+                "NO_GOGGLES" : {
+                    "description": "People detected without goggles",
+                    "schedule": "Immediate"
+                }
+            },
+            "configuration": [
+                {
+                    "name": "focus_area",
+                    "type": "region_of_interest",
+                    "required": false,
+                    "default": [
+                        0,
+                        0,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "name": "time_of_day",
+                    "type": "schedule",
+                    "required": false,
+                    "default": "always"
+                }
+            ]
+        },
+        {
+            "id": "77bf4816-393a-47cb-8dd1-9790942959c9",
+            "name": "smoking-detection",
+            "version": "0.0.2",
+            "tagline": "No smoking & No vaping zone enforcements with Vision AI.",
+            "overview": "Enforce no-smoking, no-vaping compliance policies in and around an organization. Model is trained for detecting people who are smoking or vaping.",
+            "docs": "https://docs.visionify.ai/scenarios/no-smoking-hazard/",
+            "image": "https://docsvisionify.blob.core.windows.net/docs-images/docs-visionify-version1.0-23March23/no-smoking.png",
+            "thumbnail": "https://docsvisionify.blob.core.windows.net/docs-images/docs-visionify-version1.0-23March23/no-smoking.png",
+            "models": {
+                "latest": {
+                    "version": "0.0.2",
+                    "name": "yolov5s-smoking-detection",
+                    "accuracy": 98.2,
+                    "recall": 95.2,
+                    "f1": 95,
+                    "datasetSize": 240032,
+                    "model_url": "https://workplaceos.blob.core.windows.net/models/smoking-detection/smoking-detection-0.0.2.zip",
+                    "model_hash": "f1a77567bddd6c5f565a6c83ce756953"
+                },
+                "other": [
+                ]
+            },
+            "tags": [
+                "Smoking Detection",
+                "No Smoking",
+                "No Vaping"
+            ],
+            "categories": [
+                "Employee health",
+                "Company policies"
+            ],
+            "events": {
+                "NO_SMOKING":{
+                    "description": "People detected smoking",
+                    "schedule": "Immediate"
+                },
+                "NO_VAPING":{
+                    "description": "People detected vaping",
+                    "schedule": "Immediate"
+                }
+            },
+            "configuration": [
+                {
+                    "name": "focus_area",
+                    "type": "region_of_interest",
+                    "required": false,
+                    "default": [
+                        0,
+                        0,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "name": "time_of_day",
+                    "type": "schedule",
+                    "required": false,
+                    "default": "always"
+                }
+            ]
+        },
+        {
+            "id": "ee6fbc56-1fa0-4ae3-83fe-6b6851de7535",
+            "name": "rust-and-corrosion-detection",
+            "version": "0.0.2",
+            "tagline": "Ensure the safety of employees by inspecting machine equipment for the presence of rust/corrosion.",
+            "overview": "Preventative maintenance for equipments. Rust/Corrosion detection model is designed to detect regions of rust/corrosion if any in machine parts, manufacturing equipments etc.",
+            "docs": "https://docs.visionify.ai/scenarios/rust-and-corrosion/",
+            "image": "https://docsvisionify.blob.core.windows.net/docs-images/docs-visionify-version1.0-23March23/rust-and-corrosion-detection.png",
+            "thumbnail": "https://docsvisionify.blob.core.windows.net/docs-images/docs-visionify-version1.0-23March23/rust-and-corrosion-detection.png",
+            "models": {
+                "latest": {
+                },
+                "other": [
+                ]
+            },
+            "tags": [
+                "Equipment maintenance",
+                "Preventative service",
+                "Machinery maintenance"
+            ],
+            "categories": [
+                "Maintenance",
+                "Preventative Maintenance"
+            ],
+            "events": {
+                "RUST":{
+                    "description": "Equipment detected with rust",
+                    "schedule": "Immediate"
+                },
+                "CORROSION":{
+                    "description": "Equipment detected with corrosion",
+                    "schedule": "Immediate"
+                }
+            },
+            "configuration": [
+                {
+                    "name": "focus_area",
+                    "type": "region_of_interest",
+                    "required": false,
+                    "default": [
+                        0,
+                        0,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "name": "time_of_day",
+                    "type": "schedule",
+                    "required": false,
+                    "default": "always"
+                }
+            ]
+        },
+        {
+            "id": "50948434-913f-4a61-be18-be61d63a4193",
+            "name": "slip-and-fall-detection",
+            "version": "0.0.5",
+            "tagline": "Ensure the safety of employees by inspecting slip and fall instances. Get real-time alerts when such kind of accidents occur at the workplace.",
+            "overview": "Designed to detect slip and fall instances with high accuracy. Additionally, our model trained on real-world images minimizes false-positives or false-negatives. Timely action in the event of a Fall/Slip accident can minimize damage and save lives.",
+            "docs": "https://docs.visionify.ai/scenarios/slip-and-fall-detection/",
+            "image": "https://docsvisionify.blob.core.windows.net/docs-images/docs-visionify-version1.0-23March23/slip-fall-detection.png",
+            "thumbnail": "https://docsvisionify.blob.core.windows.net/docs-images/docs-visionify-version1.0-23March23/slip-fall-detection.png",
+            "models": {
+                "latest": {
+                    "version": "0.0.5",
+                    "name": "yolov5s-slip-and-fall-detection",
+                    "accuracy": 98.2,
+                    "recall": 95.2,
+                    "f1": 95,
+                    "datasetSize": 240032,
+                    "model_url": "https://workplaceos.blob.core.windows.net/models/slip-and-fall-detection/slip-and-fall-detection-0.0.5.zip",
+                    "model_hash": "12f72472662beb9906d94841fcb01d3a"
+                },
+                "other": []
+            },
+            "tags": [
+                "Equipment maintenance",
+                "Preventative service",
+                "Machinery maintenance"
+            ],
+            "categories": [
+                "Maintenance",
+                "Preventative Maintenance"
+            ],
+            "events": {
+                "FALL":{
+                    "description": "Person fall event detected",
+                    "schedule": "Immediate"
+                },
+                "SLIP":{
+                    "description": "Person slip event detected",
+                    "schedule": "Immediate"
+                }
+            },
+            "configuration": [
+                {
+                    "name": "focus_area",
+                    "type": "region_of_interest",
+                    "required": false,
+                    "default": [
+                        0,
+                        0,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "name": "time_of_day",
+                    "type": "schedule",
+                    "required": false,
+                    "default": "always"
+                }
+            ]
+        },
+        {
+            "id": "750fc3fd-265e-44b6-84a1-9e307a5d6804",
+            "name": "face-blur",
+            "version": "0.0.1",
+            "tagline": "Ensure the privacy of individuals in public spaces.",
+            "overview": "Face blurring privacy model can be used to protect the identity of individuals in images. Face Blurring is designed to ensure that the privacy of individuals is respected while still allowing the public to have access to the video feed.",
+            "docs": "https://docs.visionify.ai/privacy/face-blur",
+            "image": "https://docsvisionify.blob.core.windows.net/docs-images/docs-visionify-version1.0-23March23/face-blurring.jpg",
+            "thumbnail": "https://docsvisionify.blob.core.windows.net/docs-images/docs-visionify-version1.0-23March23/face-blurring.jpg",
+            "models": {
+                "latest": {
+                    "version": "0.0.4",
+                    "name": "yolov5s-face",
+                    "accuracy": 94.67,
+                    "recall": 94.67,
+                    "f1": 94.67,
+                    "datasetSize": 393703,
+                    "model_url": "https://workplaceos.blob.core.windows.net/models/yolov5s-face/yolov5s-face-0.0.6.zip",
+                    "model_hash": "17150b2e8a6042613e6bf5ed61779578"
+                },
+                "other": [
+                    {
+                        "version": "0.0.1",
+                        "name": "yolov5m-face",
+                        "accuracy": 95.30,
+                        "recall": 95.30,
+                        "f1": 95.30,
+                        "datasetSize": 393703,
+                        "model_url": "https://workplaceos.blob.core.windows.net/models/yolov5m-face/yolov5m-face-0.0.1.zip",
+                        "model_hash": "29ed75541eb847cddc1ccb8487721dbc"
+                    }
+                ]
+            },
+            "tags": [
+                "Privacy",
+                "Face detection",
+                "Object detection",
+                "Privacy by Design",
+                "Embedded devices",
+                "Convolutional Neural Network",
+                "Face blurring",
+                "Face anonymization"
+            ],
+            "categories": [
+                "Preprocessing",
+                "Privacy"
+            ],
+            "events": {
+                "FACE_BLUR":{
+                    "description": "Blurred all the faces detected in the system",
+                    "schedule": "Immediate"
+                }
+            },
+            "configuration": [
+                {
+                    "name": "focus_area",
+                    "type": "region_of_interest",
+                    "required": false,
+                    "default": [
+                        0,
+                        0,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "name": "time_of_day",
+                    "type": "schedule",
+                    "required": false,
+                    "default": "always"
+                }
+            ]
+        },
+        {
+            "id": "900e92f8-a724-4194-b92c-80be3c46c372",
+            "name": "people-taking-picture-detection",
+            "version": "0.0.2",
+            "tagline": "Get real-time alerts when workers are taking pictures at the workplace, a monitoring system that can detect camera usage on company-owned devices or company networks.",
+            "overview": "People taking picture detection model can be used to safely detect mobile phone usage (people taking pictures, recording or streaming videos/audios, sending texts in prohibited areas) by providing real-time video feeds of the area.",
+            "docs": "https://docs.visionify.ai/scenarios/people-taking-picture",
+            "image": "https://docsvisionify.blob.core.windows.net/docs-images/docs-visionify-version1.0-23March23/people_taking_picture.png",
+            "thumbnail": "https://docsvisionify.blob.core.windows.net/docs-images/docs-visionify-version1.0-23March23/people_taking_picture.png",
+            "models": {
+                "latest": {
+                    "version": "0.0.2",
+                    "name": "yolov5s-people-taking-picture-detection",
+                    "accuracy": 98.2,
+                    "recall": 95.2,
+                    "f1": 95,
+                    "datasetSize": 240032,
+                    "model_url": "https://workplaceos.blob.core.windows.net/models/people-taking-picture-detection/people-taking-picture-detection-0.0.2.zip",
+                    "model_hash": "ef3c6b45fe4c9b80ca4dd99220919ffd"
+                },
+                "other": []
+            },
+            "tags": [
+                "People detection",
+                "Phone usage",
+                "People taking picture"
+            ],
+            "categories": [
+                "Maintenance",
+                "Preventative Maintenance"
+            ],
+            "events": {
+                "PHONE_USAGE":{
+                    "description": "Person detected while taking pictures",
+                    "schedule": "Immediate"
+                }
+            },
+            "configuration": [
+                {
+                    "name": "focus_area",
+                    "type": "region_of_interest",
+                    "required": false,
+                    "default": [
+                        0,
+                        0,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "name": "time_of_day",
+                    "type": "schedule",
+                    "required": false,
+                    "default": "always"
+                }
+            ]
+        },
+        {
+            "id": "0e9eef0d-686b-473d-b4b2-e43cc12ac6cf",
+            "name": "ergonomics-detection",
+            "version": "0.0.1",
+            "tagline": "Ensure safety and comfort of employees by monitoring ergonomics.",
+            "overview": "Ergonomics detection model can be used to monitor productivity and workers health by providing real-time video feeds of different areas.The primary focus of ergonomics is to create environments that optimize human performance and well-being.",
+            "docs": "https://docs.visionify.ai/scenarios/ergonomics",
+            "image": "https://docsvisionify.blob.core.windows.net/docs-images/docs-visionify-version1.0-23March23/ergonomics-detection.png",
+            "thumbnail": "https://docsvisionify.blob.core.windows.net/docs-images/docs-visionify-version1.0-23March23/ergonomics-detection.png",
+            "models": {
+                "latest": {
+                    "version": "0.0.1",
+                    "name": "yolov5s-ergonomics-detection",
+                    "accuracy": 98.2,
+                    "recall": 95.2,
+                    "f1": 95,
+                    "datasetSize": 240032,
+                    "model_url": "https://workplaceos.blob.core.windows.net/models/ergonomics-detection/ergonomics-detection-0.0.1.zip",
+                    "model_hash": "e8f02808d3313aae320fbe5d043edb58"
+                },
+                "other": []
+            },
+            "tags": [
+                "Person bending",
+                "Ergonomics detection",
+                "Bent count"
+                
+            ],
+            "categories": [
+                "Maintenance",
+                "Preventative Maintenance"
+            ],
+            "events": {
+                "BEND_COUNT":{
+                    "description": "Bend count event per individual",
+                    "schedule": "Immediate"
+                }
+            },
+            "configuration": [
+                {
+                    "name": "focus_area",
+                    "type": "region_of_interest",
+                    "required": false,
+                    "default": [
+                        0,
+                        0,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "name": "time_of_day",
+                    "type": "schedule",
+                    "required": false,
+                    "default": "always"
+                }
+            ]
+        },
+        {
+            "id": "1f14d200-e15c-4b55-ad1b-908ca81ebf08",
+            "name": "occupancy-monitoring",
+            "version": "0.0.2",
+            "tagline": "Transform the way you manage occupancy in real-time with our cutting-edge Computer Vision Occupancy Monitoring Solution",
+            "overview": "Monitor the number of people in a given area and get alerts when a person is present in the frame for more than restricted time",
+            "docs": "https://docs.visionify.ai/scenarios/max-occupancy-count/",
+            "image": "https://docsvisionify.blob.core.windows.net/docs-images/docs-visionify-version1.0-23March23/max-occupancy.jpg",
+            "thumbnail": "https://docsvisionify.blob.core.windows.net/docs-images/docs-visionify-version1.0-23March23/max-occupancy.jpg",
+            "models": {
+                "latest": {
+                    "version": "0.0.2",
+                    "name": "occupancy-monitoring",
+                    "accuracy": 98.2,
+                    "recall": 95.2,
+                    "f1": 95,
+                    "datasetSize": 3500,
+                    "model_url": "https://workplaceos.blob.core.windows.net/models/occupancy-monitoring/occupancy-monitoring-0.0.2.zip",
+                    "model_hash": "2169880d951e98f54fd7772d31648db6"
+                },
+                "other": [
+                ]
+            },
+            "tags": [
+                "Person Counting",
+                "Dwell Duration",
+                "Person Tracking"            
+            ],
+            "categories": [
+                "Security",
+                "Company policies"
+            ],
+            "events": {
+                "EXCECCED_TIME_LIMIT":{
+                    "description": "Person is present in the room more than the restricted time",
+                    "schedule": "Immediate"
+                }
+            },
+            "configuration": [
+                {
+                    "name": "focus_area",
+                    "type": "region_of_interest",
+                    "required": false,
+                    "default": [
+                        0,
+                        0,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "name": "time_of_day",
+                    "type": "schedule",
+                    "required": false,
+                    "default": "always"
+                }
+            ]
+        },
+        {
+            "id": "73218220-69e3-455c-9594-e28a310c8282",
+            "name": "firearms-detection",
+            "version": "0.0.1",
+            "tagline": "New Technology aims to improve Firearm Detection and Save Lives with VisionAI.",
+            "overview": "The goal of firearms detection is to prevent violence and ensure public safety by detecting and responding to the presence of firearms including knives, guns and other weapons.",
+            "docs": "https://docs.visionify.ai/scenarios/firearms-and-knives/",
+            "image": "https://docsvisionify.blob.core.windows.net/docs-images/docs-visionify-version1.0-23March23/firearms-detection.png",
+            "thumbnail": "https://docsvisionify.blob.core.windows.net/docs-images/docs-visionify-version1.0-23March23/firearms-detection.png",
+            "models": {
+                "latest": {
+                    "version": "0.0.7",
+                    "name": "firearms-detection",
+                    "accuracy": 98.2,
+                    "recall": 95.2,
+                    "f1": 95,
+                    "datasetSize": 4230,
+                    "model_url": "https://workplaceos.blob.core.windows.net/models/firearms-detection/firearms-detection-0.0.1.zip",
+                    "model_hash": "1e0585f776e1dd2a7f391107458fdd6a"
+                },
+                "other": [
+                ]
+            },
+            "tags": [
+                "Gun",
+                "Knife"
+            ],
+            "categories": [
+                "Personnel health",
+                "Hazard warning"
+            ],
+            "events": {
+                "GUN_DETECTED":{
+                    "description": "Gun Detected",
+                    "schedule": "Immediate"
+                },
+                "KNIFE_DETECTED":{
+                    "description": "Knife Detected",
+                    "schedule": "Immediate"
+                }
+            },
+            "configuration": [
+                {
+                    "name": "focus_area",
+                    "type": "region_of_interest",
+                    "required": false,
+                    "default": [
+                        0,
+                        0,
+                        1,
+                        1
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "50948434-913f-4a61-be18-be61d63a4193",
+            "name": "spills-and-leaks-detection",
+            "version": "0.0.1",
+            "tagline": "Spills and Leaks detection through Vision AI.",
+            "overview": "Designed to detect spills and leaks including water puddles, water leaks and slippery surfaces. The model can analyze images and video footage to identify visual anomalies, such as the appearance of a spill or leak, which can be missed by human inspectors.",
+            "docs": "https://docs.visionify.ai/scenarios/spills-and-leaks-hazard/",
+            "image": "https://docsvisionify.blob.core.windows.net/docs-images/docs-visionify-version1.0-23March23/oil-leakage.png",
+            "thumbnail": "https://docsvisionify.blob.core.windows.net/docs-images/docs-visionify-version1.0-23March23/oil-leakage.png",
+            "models": {
+                "latest": {
+                },
+                "other": []
+            },
+            "tags": [
+                "Spill detection",
+                "Leak detection",
+                "Equipment maintenance",
+                "Machinery maintenance"
+            ],
+            "categories": [
+                "Maintenance",
+                "Preventative Maintenance"
+            ],
+            "events": {
+                "SPILLS/LEAKS":{
+                    "description": "Machinery/equipment detected with spills and/or leaks",
+                    "schedule": "Immediate"
+                }
+            },
+            "configuration": [
+                {
+                    "name": "focus_area",
+                    "type": "region_of_interest",
+                    "required": false,
+                    "default": [
+                        0,
+                        0,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "name": "time_of_day",
+                    "type": "schedule",
+                    "required": false,
+                    "default": "always"
+                }
+            ]
+        },
+        {
+            "id": "ee6fbc56-1fa0-4ae3-83fe-6b6851de7535",
+            "name": "equipment-temperature-detection",
+            "version": "0.0.2",
+            "tagline": "Monitor equipment temperature. Get an alert when temperature exceeds a limit or below a threshold.",
+            "overview": "Our solution detects equipment temperature and performance by processing real-time images and videos from different sources. In addition, it can trigger an alarm (as soon as the temperature reaches the threshold margins or faulty equipment is detected) and identify areas where exits are present.",
+            "docs": "https://docs.visionify.ai/scenarios/equipment-temperature/",
+            "image": "https://docsvisionify.blob.core.windows.net/docs-images/docs-visionify-version1.0-23March23/equipment temperature monitoring.jpeg",
+            "thumbnail": "https://docsvisionify.blob.core.windows.net/docs-images/docs-visionify-version1.0-23March23/equipment temperature monitoring.jpeg",
+            "models": {
+                "latest": {
+                },
+                "other": [
+                ]
+            },
+            "tags": [
+                "Equipment maintenance",
+                "Preventative service",
+                "Temperature monitoring"
+            ],
+            "categories": [
+                "Maintenance",
+                "Preventative Maintenance"
+            ],
+            "events": {
+                "EQUIPMENT_TEMPERATURE":{
+                    "description": "Equipment temperature exceeded the threshold",
+                    "schedule": "Immediate"
+                }
+            }, 
+            "configuration": [
+                {
+                    "name": "focus_area",
+                    "type": "region_of_interest",
+                    "required": false,
+                    "default": [
+                        0,
+                        0,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "name": "time_of_day",
+                    "type": "schedule",
+                    "required": false,
+                    "default": "always"
+                }
+            ]
+        },
+        {
+            "id": "pe6fdsdhfc56-1fa0-4ae3-83fe-8g6751de7535",
+            "name": "gas-leak-detection",
+            "version": "0.0.1",
+            "tagline": "Gas leaks detection through VisionAI.",
+            "overview": "Our solution aimed at detecting the infrared radiation emitted by objects and can be used to visualize gas leaks that are invisible to the naked eye. The infrared cameras can be used for leak detection in large areas, such as pipelines and storage tanks.",
+            "docs": "https://docs.visionify.ai/scenarios/gas-leaks-detection/",
+            "image": "https://docsvisionify.blob.core.windows.net/docs-images/docs-visionify-version1.0-23March23/gas-leak.jpg",
+            "thumbnail": "https://docsvisionify.blob.core.windows.net/docs-images/docs-visionify-version1.0-23March23/gas-leak.jpg",
+            "models": {
+                "latest": {
+                },
+                "other": [
+                ]
+            },
+            "tags": [
+                "Equipment maintenance",
+                "Preventative service",
+                "Gas leak detection"
+            ],
+            "categories": [
+                "Maintenance",
+                "Preventative Maintenance"
+            ],
+            "events": {
+                "GAS_LEAKAGE":{
+                    "description": "Equipment gas leakage detected",
+                    "schedule": "Immediate"
+                }
+            },
+            "configuration": [
+                {
+                    "name": "focus_area",
+                    "type": "region_of_interest",
+                    "required": false,
+                    "default": [
+                        0,
+                        0,
+                        1,
+                        1
+                    ]
+                },
+                {
+                    "name": "time_of_day",
+                    "type": "schedule",
+                    "required": false,
+                    "default": "always"
+                }
+            ]
+        },
+        {
+            "id": "50948434-913f-4a61-be18-be61d63a4193",
+            "name": "fall-and-accident-detection",
+            "version": "0.0.1",
+            "tagline": "Detect potential collision/accident and wet floor, inspect slip and fall instances with VisionAI.",
+            "overview": "Fall & Accident computer vision based detection system is designed to detect potential safety hazards in a given environment. The system uses video data from cameras placed in the area to identify a range of potential hazards, including person slip & fall, potential collision/accident, wet floor, debris on the floor, and wet/slippery signs.",
+            "docs": "https://docs.visionify.ai/scenarios/fall-and-accident.md",
+            "image": "https://docsvisionify.blob.core.windows.net/docs-images/docs-visionify-version1.0-23March23/fall-and-accident-detection.png",
+            "thumbnail": "https://docsvisionify.blob.core.windows.net/docs-images/docs-visionify-version1.0-23March23/fall-and-accident-detection.png",
+            "models": {
+                "latest": {
+                },
+                "other": []
+            },
+            "tags": [
+                "Fall detection",
+                "Potential collision",
+                "Wet floor detection",
+                "Slip detection",
+                "Fall and accident detection"
+            ],
+            "categories": [
+                "Maintenance",
+                "Preventative Maintenance"
+            ],
+            "events": {
+                "SLIP_AND_FALL":{
+                    "description": "Person slip & fall detected",
+                    "schedule": "Immediate"
+                },
+                "POTENTIAL_COLLISION":{
+                    "description": "Potential collision/accident detected",
+                    "schedule": "Immediate"
+                },
+                "WET_FLOOR":{
+                    "description": "Wet floor detected",
+                    "schedule": "Immediate"
+                },
+                "SLIPPERY_SIGN":{
+                    "description": "Wet/slippery sign detected",
+                    "schedule": "Immediate"
+                }
+            },

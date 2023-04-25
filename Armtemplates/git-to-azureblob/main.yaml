@@ -1,0 +1,37 @@
+name: Transfer and Sync to Azure Blob Storage
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync-to-azure-blob-storage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
+      - name: Sync to Azure Blob Storage
+        env:
+          servicePrincipalId: ${{ secrets.SERVICE_PRINCIPAL_ID }}
+          servicePrincipalKey: ${{ secrets.SERVICE_PRINCIPAL_KEY }}
+          tenantId: ${{ secrets.TENANT_ID }}
+        run: |
+          az login --service-principal -u $servicePrincipalId -p $servicePrincipalKey --tenant $tenantId
+          git clone https://github.com/visionify/visionai.git
+          cd visionai
+          git checkout main
+          az storage blob copy start-batch --destination-container container --destination-blob scenario.json --destination-blob-type BlockBlob --account-name aksummasa --account-key EHgYO+PteTD3ffty2emylBZBr4Rwsh6f969wyEHUU8gcrSiCyzpriDsRw6qJsm7BBLbT4QoaJct0+ASt60X4Qw== --source-uri https://github.com/kar122/jsontoblob/raw/main/scenarios.json
+
+
+
+
+
+
+          - task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      echo "Source directory: $(System.DefaultWorkingDirectory)"
